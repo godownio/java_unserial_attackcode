@@ -1,0 +1,16 @@
+package org.example;
+
+public class BImpl implements Binterface{
+    public void add()
+    {
+        System.out.println("BImpl add");
+    }
+    public void display()
+    {
+        System.out.println("BImpl display");
+    }
+    public void delete()
+    {
+        System.out.println("BImpl delete");
+    }
+}

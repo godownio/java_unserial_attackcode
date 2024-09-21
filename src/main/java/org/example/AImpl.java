@@ -1,0 +1,15 @@
+package org.example;
+
+public class AImpl implements Ainterface{
+    public void display()
+    {
+        System.out.println("display");
+    }
+    public void select(){
+        System.out.println("select");
+    }
+    public void add()
+    {
+        System.out.println("add");
+    }
+}

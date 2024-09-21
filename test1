@@ -1,0 +1,72 @@
+//1次add，2次直接writeObject
+STREAM_MAGIC - 0xac ed
+STREAM_VERSION - 0x00 05
+Contents
+  TC_OBJECT - 0x73
+    TC_CLASSDESC - 0x72
+      className
+        Length - 16 - 0x00 10
+        Value - org.example.test - 0x6f72672e6578616d706c652e74657374
+      serialVersionUID - 0x00 00 00 00 00 00 00 64
+      newHandle 0x00 7e 00 00
+      classDescFlags - 0x03 - SC_WRITE_METHOD | SC_SERIALIZABLE
+      fieldCount - 0 - 0x00 00
+      classAnnotations
+        TC_ENDBLOCKDATA - 0x78
+      superClassDesc
+        TC_NULL - 0x70
+    newHandle 0x00 7e 00 01
+    classdata
+      org.example.test
+        values
+        objectAnnotation
+          TC_OBJECT - 0x73
+            TC_CLASSDESC - 0x72
+              className
+                Length - 23 - 0x00 17
+                Value - java.util.LinkedHashSet - 0x6a6176612e7574696c2e4c696e6b656448617368536574
+              serialVersionUID - 0xd8 6c d7 5a 95 dd 2a 1e
+              newHandle 0x00 7e 00 02
+              classDescFlags - 0x02 - SC_SERIALIZABLE
+              fieldCount - 0 - 0x00 00
+              classAnnotations
+                TC_ENDBLOCKDATA - 0x78
+              superClassDesc
+                TC_CLASSDESC - 0x72
+                  className
+                    Length - 17 - 0x00 11
+                    Value - java.util.HashSet - 0x6a6176612e7574696c2e48617368536574
+                  serialVersionUID - 0xba 44 85 95 96 b8 b7 34
+                  newHandle 0x00 7e 00 03
+                  classDescFlags - 0x03 - SC_WRITE_METHOD | SC_SERIALIZABLE
+                  fieldCount - 0 - 0x00 00
+                  classAnnotations
+                    TC_ENDBLOCKDATA - 0x78
+                  superClassDesc
+                    TC_NULL - 0x70
+            newHandle 0x00 7e 00 04
+            classdata
+              java.util.HashSet
+                values
+                objectAnnotation
+                  TC_BLOCKDATA - 0x77
+                    Length - 12 - 0x0c
+                    Contents - 0x000000103f40000000000001
+                  TC_STRING - 0x74
+                    newHandle 0x00 7e 00 05
+                    Length - 3 - 0x00 03
+                    Value - aaa - 0x616161
+                  TC_ENDBLOCKDATA - 0x78
+              java.util.LinkedHashSet
+                values
+          TC_STRING - 0x74
+            newHandle 0x00 7e 00 06
+            Length - 3 - 0x00 03
+            Value - bbb - 0x626262
+          TC_STRING - 0x74
+            newHandle 0x00 7e 00 07
+            Length - 3 - 0x00 03
+            Value - ccc - 0x636363
+          TC_ENDBLOCKDATA - 0x78
+  TC_REFERENCE - 0x71
+    Handle - 8257537 - 0x00 7e 00 01

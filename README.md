@@ -31,6 +31,7 @@
   - [开发前的配置要求](#开发前的配置要求)
   - [安装步骤](#安装步骤)
 - [目前包含的框架](#使用到的框架)
+- [目录介绍](#目录介绍)
 - [贡献者](#贡献者)
   - [如何参与开源项目](#如何参与开源项目)
 - [版本控制](#版本控制)
@@ -71,7 +72,10 @@ git clone
 
 maven刷新
 
-排除目录ctf_complate_exclude
+排除目录ctf_complate_exclude、othercase目录下dynamicProxy、fastjson
+
+本工具测试漏洞环境分别需要：JDK7u21,8u20,8u65,8u71,8u121,8u191,8u211,11u，请视情况安装
+
 
 
 ### 目前包含的框架
@@ -80,6 +84,25 @@ maven刷新
 - Common Collections
 - Rome
 - jdk8&jdk7
+- fastjson
+- jackson
+- groovy
+- C3P0
+- SnakeYaml
+- Tomcat7/8
+
+### 目录介绍
+com.fasterxml.jackson.databind.node用于jackson POJONode复现
+
+org.exploit用于生成反序列化字节码，每个文件独立使用
+
+resources目录下的ProcesserBuilder...xml用于SpEL远程加载
+
+主目录下的ASM文件是fastjson提取出的字节码，提取脚本来自src/main/java/org/exploit/othercase/fastjson/
+
+ProxylazyMap是研究动态代理时提取的字节码，提取脚本来自src/main/java/org/exploit/othercase/dynamicProxy
+
+
 
 ### 贡献者
 

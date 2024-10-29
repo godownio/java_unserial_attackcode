@@ -24,7 +24,7 @@
 
 
  本篇README.md面向开发者
- 
+
 ## 目录
 
 - [上手指南](#上手指南)
@@ -72,7 +72,7 @@ git clone
 
 maven刷新
 
-排除目录ctf_complate_exclude、othercase目录下dynamicProxy、fastjson
+排除目录ctf_complate_exclude、othercase目录下dynamicProxy、fastjson、groovy_RuntimeEvil
 
 本工具测试漏洞环境分别需要：JDK7u21,8u20,8u65,8u71,8u121,8u191,8u211,11u，请视情况安装
 

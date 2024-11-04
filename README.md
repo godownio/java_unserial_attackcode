@@ -90,6 +90,7 @@ maven刷新
 - C3P0
 - SnakeYaml
 - Tomcat7/8
+- XStream
 
 ### 目录介绍
 com.fasterxml.jackson.databind.node用于jackson POJONode复现

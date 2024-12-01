@@ -91,11 +91,13 @@ maven刷新
 - SnakeYaml
 - Tomcat7/8
 - XStream
+- MEVL
 
 ### 目录介绍
 com.fasterxml.jackson.databind.node用于jackson POJONode复现
 
 org.exploit用于生成反序列化字节码，每个文件独立使用
+* jndiHighVersion目录用于JDK>=8U191 JNDI高版本注入，每个目录下又需要该目录名的软件包依赖，比如MVEL/ShellSession需要MVEL依赖
 
 resources目录下的ProcesserBuilder...xml用于SpEL远程加载
 

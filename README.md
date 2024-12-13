@@ -81,19 +81,19 @@ maven刷新
 ### 目前包含的框架
 
 - shiro
-- Common Collections
+- Common Collections 3.2.1&4.0.0
 - Rome
-- jdk8&jdk7
-- fastjson
+- jdk8u20&7u21
+- fastjson 1.2.24-1.2.68
 - jackson
 - groovy
 - C3P0
 - SnakeYaml
-- JNDI HIGHVERSION(contain Groovy/h2database/MVEL/SnakeYaml/XStream)RCE&XXE&JDBC Attack
+- JNDI HIGHVERSION(contain Groovy/H2database/MVEL/SnakeYaml/XStream)RCE&XXE&JDBC Attack
 - XStream
-- MEVL
-- JDBC Attack
+- JDBC Attack(MySQL/PostgreSQL/H2database/ModeShape/Derby)
 - AspectJWeaver
+- WebLogic(Only CVE-2015-4812)
 
 ### 目录介绍
 com.fasterxml.jackson.databind.node用于jackson POJONode复现

@@ -89,9 +89,11 @@ maven刷新
 - groovy
 - C3P0
 - SnakeYaml
-- Tomcat7/8
+- JNDI HIGHVERSION(contain Groovy/h2database/MVEL/SnakeYaml/XStream)RCE&XXE&JDBC Attack
 - XStream
 - MEVL
+- JDBC Attack
+- AspectJWeaver
 
 ### 目录介绍
 com.fasterxml.jackson.databind.node用于jackson POJONode复现

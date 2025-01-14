@@ -42,8 +42,6 @@
 
 需要哪个payload就进去运行哪个。生成的字节码在项目文件ser.bin，可自行送往base64编码
 
-项目运行需要排除ctf_complates_exclude，othercase目录
-
 试运行，请修改至漏洞sdk，如CC1 JDK<=8U65
 
 java目录下为三个恶意类加载源文件，分别是：
@@ -52,7 +50,7 @@ java目录下为三个恶意类加载源文件，分别是：
 * TemplatesImpl恶意类反弹shell，TemplatesImpl_bash_shell
 * TemplatesImpl弹计算器（本地测试使用），TemplatesImpl_RuntimeEvil
 
-类加载时自行更改文件路径
+涉及File加载时自行更改文件路径
 
 其他漏洞分析需要的文件：
 
@@ -72,7 +70,17 @@ git clone
 
 maven刷新
 
-排除目录ctf_complate_exclude、othercase目录下dynamicProxy、fastjson、groovy_RuntimeEvil
+需排除以下文件或目录：ctf_complete_exclude目录，othercase/dynamicProxy目录，othercase/fastjson，jacksoncase等框出来的文件
+
+![image-20241222183030539](https://typora-202017030217.oss-cn-beijing.aliyuncs.com/typora/image-20241222183030539.png)
+
+![image-20241222183045507](https://typora-202017030217.oss-cn-beijing.aliyuncs.com/typora/image-20241222183045507.png)
+
+![image-20241222183052721](https://typora-202017030217.oss-cn-beijing.aliyuncs.com/typora/image-20241222183052721.png)
+
+![image-20241222183109210](https://typora-202017030217.oss-cn-beijing.aliyuncs.com/typora/image-20241222183109210.png)
+
+![image-20241222183156291](https://typora-202017030217.oss-cn-beijing.aliyuncs.com/typora/image-20241222183156291.png)
 
 本工具测试漏洞环境分别需要：JDK7u21,8u20,8u65,8u71,8u121,8u191,8u211,11u，请视情况安装
 
@@ -91,7 +99,7 @@ maven刷新
 - SnakeYaml
 - JNDI HIGHVERSION(contain Groovy/H2database/MVEL/SnakeYaml/XStream)RCE&XXE&JDBC Attack
 - XStream
-- JDBC Attack(MySQL/PostgreSQL/H2database/ModeShape/Derby)
+- JDBC Attack(MySQL/PostgreSQL/H2database/ModeShape/Derby/sqlite)
 - AspectJWeaver
 - WebLogic(Only CVE-2015-4812)
 

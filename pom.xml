@@ -13,11 +13,63 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <repositories>
+        <repository>
+            <id>org.example</id>
+            <name>marshalsec</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+        <repository>
+            <id>mvnrepository</id>
+            <name>Maven com</name>
+            <url>https://mvnrepository.com/artifact/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>mvnrepository</id>
+            <name>Maven com</name>
+            <url>https://repo1.maven.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <dependency>
+            <groupId>org.exploit</groupId>
+            <artifactId>marshalsec</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/marshalsec-0.0.3-SNAPSHOT-all.jar</systemPath>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.exploit</groupId>-->
+<!--            <artifactId>dubbo-common</artifactId>-->
+<!--            <version>2.7.3</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/lib/dubbo-common-2.7.3.jar</systemPath>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-common</artifactId>
+            <version>2.7.3</version>
+        </dependency>
         <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -29,6 +81,33 @@
             <artifactId>shiro-core</artifactId>
             <version>1.2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nqzero</groupId>
+            <artifactId>permit-reflect</artifactId>
+            <version>0.4</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.dubbo</groupId>-->
+<!--            <artifactId>dubbo</artifactId>-->
+<!--            <version>2.7.6</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.38</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
@@ -161,11 +240,11 @@
 <!--            <artifactId>jackson-annotations</artifactId>-->
 <!--            <version>2.13.3</version>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.68</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>1.2.68</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -179,7 +258,7 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>4.0.0</version>
+            <version>5.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.sleepycat</groupId>

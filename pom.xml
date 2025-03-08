@@ -297,6 +297,19 @@
             <artifactId>tomcat-embed-el</artifactId>
             <version>8.5.56</version> <!-- 使用与你的Tomcat版本相匹配的版本 -->
         </dependency>
+        <!-- log4j依赖 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <!-- 下面三个为JDBC Attack依赖 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -312,6 +325,8 @@
             <artifactId>derby</artifactId>
             <version>10.10.1.1</version>
         </dependency>
+
+        <!-- aspectjweaver写文件 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>

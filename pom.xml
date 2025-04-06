@@ -20,7 +20,7 @@
             <url>file:${project.basedir}/lib</url>
         </repository>
         <repository>
-            <id>mvnrepository</id>
+            <id>mvnrepository1</id>
             <name>Maven com</name>
             <url>https://mvnrepository.com/artifact/</url>
             <releases>
@@ -31,7 +31,7 @@
             </snapshots>
         </repository>
         <repository>
-            <id>mvnrepository</id>
+            <id>mvnrepository2</id>
             <name>Maven com</name>
             <url>https://repo1.maven.org/maven2/</url>
             <snapshots>
@@ -345,6 +345,72 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.1</version>
             </plugin>
+            <!-- 使用 maven-assembly-plugin -->
+<!--            打包所有依赖到jar,并且是文件夹级别的深耦合,即fatJAR,生成jar-with-dependencies-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- 不指定 mainClass -->
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+<!--            搜索unshade模式，仅仅把源码lib目录复制到jar lib目录-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                <version>3.5.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-dependencies</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-dependencies</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.basedir}/lib</outputDirectory>-->
+<!--                            <includeScope>runtime</includeScope>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <version>3.6.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>make-jar-with-lib</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <descriptors>-->
+<!--                                <descriptor>assembly.xml</descriptor>-->
+<!--                            </descriptors>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
+
 </project>

